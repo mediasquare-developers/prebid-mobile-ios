@@ -15,7 +15,7 @@
 
 import Foundation
 
-fileprivate let defaultTimeoutMillis = 2000
+fileprivate let defaultTimeoutMillis = 5000
 
 public typealias PrebidInitializationCallback = ((PrebidInitializationStatus, Error?) -> Void)
 

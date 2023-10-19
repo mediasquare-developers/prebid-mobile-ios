@@ -152,6 +152,9 @@ public class AdUnit: NSObject, DispatcherDelegate {
             if (!self.didReceiveResponse) {
                 self.timeOutSignalSent = true
                 completion(BidInfo(resultCode: .prebidDemandTimedOut))
+                
+                Log.error("[Prebid Mobile] Request Timeout")
+                
                 return
             }
         })

@@ -49,7 +49,7 @@ extension String {
 
 extension Int {
 
-    static let PB_Request_Timeout = 2000
+    static let PB_Request_Timeout = 5000
 }
 
 extension UIDevice {
