@@ -42,7 +42,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             consentHelper.parseAndApply(consentSettingsString: params[0])
         }
         
-        try? Prebid.shared.setCustomPrebidServer(url: "https://prebid-server-test-j.prebid.org/openrtb2/auction")
+        //required in Objective-C but not sure here
+        //Prebid.shared.prebidServerAccountId = "test"
+        try? Prebid.shared.setCustomPrebidServer(url: "https://pbs-front.mediasquare.fr/msq_prebid")
         
         //Set up SDK.
         Prebid.initializeSDK { status, error in
