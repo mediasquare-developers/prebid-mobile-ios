@@ -173,4 +173,60 @@
     [bidRequest.imp firstObject].native = [[PBMORTBNative alloc] init];
 }
 
+#pragma mark - MSQ Methods
+
+- (void)buildMsqRequest:(nonnull PBMORTBMsqRequest *)bidRequest {
+    if (!(self.adConfiguration && self.sdkConfiguration && self.sdkVersion)) {
+        PBMLogError(@"Invalid properties");
+        return;
+    }
+    
+    NSString *uuid = [[NSUUID UUID] UUIDString];
+    
+    //Add an empty impression if there is none
+    if (bidRequest.codes.count == 0) {
+        bidRequest.codes = @[[[Code alloc] init]];
+    }
+    
+    for (Code *code in bidRequest.codes) {
+        [self configureCodeObject:code withUuid:uuid];
+    }
+}
+
+- (void)configureCodeObject:(Code *)code withUuid:(NSString *)uuid {
+    code.transactionId = uuid;
+    
+    if (self.adConfiguration) {
+        [self setCommonCodeValues:code];
+        
+        if([self.adConfiguration.adFormats containsObject: AdFormat.banner]) {
+            [self setBannerCodeValues:code];
+            
+        }
+    }
+}
+
+-(void)setCommonCodeValues:(Code *)code {
+    code.owner = @"test";
+    code.code = @"publishername_atf_desktop_rg_pave";
+    
+    code.isInterstitial = self.adConfiguration.isInterstitialAd;
+}
+
+-(void)setBannerCodeValues:(Code *)code {
+    Banner *banner = [[Banner alloc] init];
+    
+    if(!self.adConfiguration.isInterstitialAd) {
+        [banner addSize:self.adConfiguration.size];
+    } else {
+        [banner addSize:CGSizeMake(320, 480)];
+    }
+    
+    //TODO: Check if there is an equivalent to Android AdPosition value
+    banner.position = 1;
+    
+    [code.mediaTypes setBanner:banner];
+}
+
+
 @end

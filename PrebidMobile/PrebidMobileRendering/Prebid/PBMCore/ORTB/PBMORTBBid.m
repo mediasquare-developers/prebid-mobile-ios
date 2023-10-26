@@ -83,7 +83,7 @@
     _impid = jsonDictionary[@"impid"];
     _price = jsonDictionary[@"price"];
     
-    if (!(_bidID && _impid && _price)) {
+    if (!_bidID && !_impid && !_price) {
         return nil;
     }
     
@@ -110,6 +110,51 @@
     _wratio = jsonDictionary[@"wratio"];
     _hratio = jsonDictionary[@"hratio"];
     _exp = jsonDictionary[@"exp"];
+    
+    return self;
+}
+
+- (instancetype)initWithMsqJsonDictionary:(PBMJsonDictionary *)jsonDictionary extParser:(id  _Nullable (^)(PBMJsonDictionary * _Nonnull))extParser {
+    if (!(self = [super initWithMsqJsonDictionary:jsonDictionary extParser:extParser])) {
+        return nil;
+    }
+    
+    _bidID = jsonDictionary[@"code"];
+    _impid = jsonDictionary[@"impid"];
+    _price = jsonDictionary[@"cpm"];
+    
+    if (!_bidID && !_impid && !_price) {
+        return nil;
+    }
+    
+    _adm = jsonDictionary[@"ad"];
+    
+    _crid = jsonDictionary[@"creative_id"];
+    
+    _nurl = jsonDictionary[@"nurl"];
+    _burl = jsonDictionary[@"burl"];
+    _lurl = jsonDictionary[@"lurl"];
+    
+    _adid = jsonDictionary[@"adid"];
+    _adomain = jsonDictionary[@"adomain"];
+    
+    _bundle = jsonDictionary[@"bundle"];
+    _iurl = jsonDictionary[@"iurl"];
+    _cid = jsonDictionary[@"cid"];
+    _tactic = jsonDictionary[@"tactic"];
+    _cat = jsonDictionary[@"cat"];
+    _attr = jsonDictionary[@"attr"];
+    _api = jsonDictionary[@"api"];
+    _protocol = jsonDictionary[@"protocol"];
+    _qagmediarating = jsonDictionary[@"qagmediarating"];
+    _language = jsonDictionary[@"language"];
+    _dealid = jsonDictionary[@"dealid"];
+    _w = jsonDictionary[@"width"];
+    _h = jsonDictionary[@"height"];
+    _wratio = jsonDictionary[@"wratio"];
+    _hratio = jsonDictionary[@"hratio"];
+    _exp = jsonDictionary[@"exp"];
+    
     
     return self;
 }

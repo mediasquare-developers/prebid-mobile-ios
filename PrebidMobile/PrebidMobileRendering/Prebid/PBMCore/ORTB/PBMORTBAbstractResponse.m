@@ -36,6 +36,44 @@
     return self;
 }
 
+- (instancetype)initWithMsqJsonDictionary:(nonnull PBMJsonDictionary *)jsonDictionary extParser:(id (^)(PBMJsonDictionary *))extParser {
+    if (!(self = [super init])) {
+        return nil;
+    }
+    
+    // Faked "ext" dictionnary ------------------------------------------------
+    
+    PBMMutableJsonDictionary *headerBidding = [[PBMMutableJsonDictionary alloc] init];
+    
+    headerBidding[@"hb_pb"] = [jsonDictionary[@"cpm"] stringValue];
+    headerBidding[@"hb_bidder"] = jsonDictionary[@"bidder"];
+    
+    if (jsonDictionary[@"width"] && jsonDictionary[@"height"]) {
+        headerBidding[@"hb_size"] = [NSString stringWithFormat:@"%ldx%ld",
+                                     (long)[jsonDictionary[@"width"] integerValue],
+                                     (long)[jsonDictionary[@"height"] integerValue]];
+    }
+    
+    if (Prebid.shared.useCacheForReportingWithRenderingAPI) {
+        headerBidding[@"hb_cache_id"] = jsonDictionary[@"bid_id"];
+    }
+    
+    PBMMutableJsonDictionary *targeting = [[PBMMutableJsonDictionary alloc] init];
+    targeting[@"targeting"] = headerBidding;
+    targeting[@"type"] = AdFormat.display.stringEquivalent;
+    
+    PBMMutableJsonDictionary *prebid = [[PBMMutableJsonDictionary alloc] init];
+    prebid[@"prebid"] = targeting;
+    
+    PBMJsonDictionary *const rawExt = prebid;
+    
+    if (rawExt && extParser) {
+        _ext = extParser(rawExt);
+    }
+    
+    return self;
+}
+
 - (PBMJsonDictionary *)toJsonDictionary {
     PBMMutableJsonDictionary * const ret = [[PBMMutableJsonDictionary alloc] init];
     [self populateJsonDictionary:ret];

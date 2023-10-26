@@ -87,4 +87,32 @@
     return self;
 }
 
+- (instancetype)initWithMsqJsonDictionary:(PBMJsonDictionary *)jsonDictionary extParser:(id (^)(PBMJsonDictionary *))extParser bidExtParser:(id (^)(PBMJsonDictionary *))bidExtParser {
+    if (!(self = [super initWithJsonDictionary:jsonDictionary extParser:extParser])) {
+        return nil;
+    }
+    
+    _bid = nil;
+    
+    if (jsonDictionary) {
+        NSMutableArray * const newBid = [[NSMutableArray alloc] initWithCapacity:1];
+        
+        PBMORTBBid * const nextBid = [[PBMORTBBid alloc] initWithMsqJsonDictionary:jsonDictionary extParser:bidExtParser];
+        if (nextBid) {
+            [newBid addObject:nextBid];
+        }
+        
+        _bid = newBid;
+    }
+    
+    if (!_bid.count) {
+        return nil;
+    }
+    
+    _seat = jsonDictionary[@"bidder"];
+    _group = jsonDictionary[@"group"];
+    
+    return self;
+}
+
 @end

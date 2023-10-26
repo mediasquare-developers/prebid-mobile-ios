@@ -23,6 +23,8 @@
 
 - (nullable instancetype)initWithJsonDictionary:(nonnull PBMJsonDictionary *)jsonDictionary extParser:(ExtType _Nullable (^ _Nonnull)(PBMJsonDictionary * _Nonnull))extParser bidExtParser:(BidExtType _Nullable (^ _Nonnull)(PBMJsonDictionary * _Nonnull))bidExtParser;
 
+- (nullable instancetype)initWithMsqJsonDictionary:(nonnull PBMJsonDictionary *)jsonDictionary extParser:(ExtType _Nullable (^ _Nonnull)(PBMJsonDictionary * _Nonnull))extParser bidExtParser:(BidExtType _Nullable (^ _Nonnull)(PBMJsonDictionary * _Nonnull))bidExtParser;
+
 @end
 
 #endif /* PBMORTBSeatBid_Internal_h */

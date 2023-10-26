@@ -31,4 +31,11 @@
     bidRequest.regs.ext[@"us_privacy"] = InternalUserConsentDataManager.usPrivacyString;
 }
 
+- (void)buildMsqRequest:(nonnull PBMORTBMsqRequest *)bidRequest { 
+    // GDPR
+    bidRequest.gdpr.consentString = Targeting.shared.gdprConsentString;
+    bidRequest.gdpr.consentRequired = Targeting.shared.getSubjectToGDPR;
+}
+
+
 @end

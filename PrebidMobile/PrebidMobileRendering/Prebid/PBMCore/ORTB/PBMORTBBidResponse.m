@@ -63,6 +63,24 @@
     if (!(self = [super initWithJsonDictionary:jsonDictionary extParser:extParser])) {
         return nil;
     }
+    
+    // MSQ Custom code implementation -----------------------------------------
+    
+    NSArray * const responsesJsonArr = jsonDictionary[@"responses"];
+    if (responsesJsonArr) {
+        return (self = [self initWithMsqJsonDictionary:jsonDictionary extParser:extParser seatBidExtParser:seatBidExtParser bidExtParser:bidExtParser]);
+    }
+        
+    return (self = [self initWithStandardJsonDictionary:jsonDictionary extParser:extParser seatBidExtParser:seatBidExtParser bidExtParser:bidExtParser]);
+    
+    // ------------------------------------------------------------------------
+}
+
+- (instancetype)initWithStandardJsonDictionary:(PBMJsonDictionary *)jsonDictionary extParser:(id (^)(PBMJsonDictionary *))extParser seatBidExtParser:(id (^)(PBMJsonDictionary *))seatBidExtParser bidExtParser:(id (^)(PBMJsonDictionary *))bidExtParser {
+    if (!(self = [super initWithJsonDictionary:jsonDictionary extParser:extParser])) {
+        return nil;
+    }
+    
     _requestID = jsonDictionary[@"id"];
     if (!_requestID) {
         return nil;
@@ -83,6 +101,39 @@
     _cur = jsonDictionary[@"cur"];
     _customdata = jsonDictionary[@"customdata"];
     _nbr = jsonDictionary[@"nbr"];
+    
+    return self;
+}
+
+- (instancetype)initWithMsqJsonDictionary:(PBMJsonDictionary *)jsonDictionary extParser:(id (^)(PBMJsonDictionary *))extParser seatBidExtParser:(id (^)(PBMJsonDictionary *))seatBidExtParser bidExtParser:(id (^)(PBMJsonDictionary *))bidExtParser {
+    if (!(self = [super initWithJsonDictionary:jsonDictionary extParser:extParser])) {
+        return nil;
+    }
+    
+    NSArray * const responsesJsonArr = jsonDictionary[@"responses"];
+    if (responsesJsonArr && responsesJsonArr.count > 0) {
+        
+        PBMJsonDictionary *firstBid = [responsesJsonArr firstObject];
+        
+        _requestID = firstBid[@"code"];
+        if (!_requestID) {
+            return nil;
+        }
+        
+        _cur = firstBid[@"currency"];
+        _bidid = firstBid[@"bid_id"];
+        _customdata = firstBid[@"customdata"];
+        _nbr = firstBid[@"nbr"];
+        
+        NSMutableArray * const newSeatbid = [[NSMutableArray alloc] initWithCapacity:responsesJsonArr.count];
+        for(PBMJsonDictionary *nextDic in responsesJsonArr) {
+            PBMORTBSeatBid * const nextSeatBid = [[PBMORTBSeatBid alloc] initWithMsqJsonDictionary:nextDic extParser:seatBidExtParser bidExtParser:bidExtParser];
+            if (nextSeatBid) {
+                [newSeatbid addObject:nextSeatBid];
+            }
+        }
+        _seatbid = newSeatbid;
+    }
     
     return self;
 }

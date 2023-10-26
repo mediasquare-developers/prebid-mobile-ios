@@ -23,6 +23,8 @@
 
 - (nullable instancetype)initWithJsonDictionary:(nonnull PBMJsonDictionary *)jsonDictionary extParser:(ExtType _Nullable (^ _Nonnull)(PBMJsonDictionary * _Nonnull))extParser;
 
+- (nullable instancetype)initWithMsqJsonDictionary:(nonnull PBMJsonDictionary *)jsonDictionary extParser:(ExtType _Nullable (^ _Nonnull)(PBMJsonDictionary * _Nonnull))extParser;
+
 - (void)populateJsonDictionary:(nonnull PBMMutableJsonDictionary *)jsonDictionary;
 
 @property (nonatomic, readonly, nullable) PBMJsonDictionary *extAsJsonDictionary;

@@ -16,8 +16,11 @@
 #import <Foundation/Foundation.h>
 #import "PBMParameterBuilderProtocol.h"
 
+@class PBMORTBMsqRequest;
+
 @interface PBMORTBParameterBuilder : NSObject
 
 + (NSDictionary<NSString *, NSString *> *)buildOpenRTBFor:(PBMORTBBidRequest *)bidRequest;
++ (NSDictionary<NSString *, NSString *> *)buildOpenRTBForMsq:(PBMORTBMsqRequest *)bidRequest;
 
 @end

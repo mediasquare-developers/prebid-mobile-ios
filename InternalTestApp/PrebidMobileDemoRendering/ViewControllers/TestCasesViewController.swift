@@ -109,7 +109,7 @@ class TestCasesViewController: UIViewController, UITableViewDelegate, UITableVie
         
         //Set up the default account id here
         //as it can be changed in any test cases
-        //Prebid.shared.prebidServerAccountId = "test"
+        Prebid.shared.prebidServerAccountId = "test"
         try? Prebid.shared.setCustomPrebidServer(url: "https://pbs-front.mediasquare.fr/msq_prebid")
         
         example.configurationClosure?(vc)

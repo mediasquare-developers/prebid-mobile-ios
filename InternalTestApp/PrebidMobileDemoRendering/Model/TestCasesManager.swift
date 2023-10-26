@@ -576,7 +576,7 @@ struct TestCaseManager {
                 let bannerController = PrebidBannerController(rootController: adapterVC)
                 bannerController.adSizes = [CGSize(width: 320, height: 50)]
                         
-                bannerController.prebidConfigId = "prebid-ita-banner-320-50";
+                bannerController.prebidConfigId = "imp-prebid-banner-320-50"
                         
                 adapterVC.setup(adapter: bannerController)
                         

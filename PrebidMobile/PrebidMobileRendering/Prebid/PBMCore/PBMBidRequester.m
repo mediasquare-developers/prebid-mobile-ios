@@ -72,7 +72,9 @@
     self.completion = completion ?: ^(BidResponse *r, NSError *e) {};
     
     NSString * const requestString = [self getRTBRequest];
-           
+    
+    PBMLogInfo(@"Bid Request: %@", requestString);
+    
     NSError * hostURLError = nil;
     NSString * const requestServerURL = [Host.shared getHostURLWithHost:self.sdkConfiguration.prebidServerHost error:&hostURLError];
     

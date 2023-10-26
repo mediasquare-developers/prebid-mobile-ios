@@ -14,9 +14,11 @@
  */
 
 @class PBMORTBBidRequest;
+@class PBMORTBMsqRequest;
 
 @protocol PBMParameterBuilder
 
+- (void)buildMsqRequest:(nonnull PBMORTBMsqRequest *)bidRequest;
 - (void)buildBidRequest:(nonnull PBMORTBBidRequest *)bidRequest;
 
 @end

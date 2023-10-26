@@ -45,4 +45,26 @@
     return ret;
 }
 
++ (NSDictionary<NSString *,NSString *> *)buildOpenRTBForMsq:(PBMORTBMsqRequest *)bidRequest {
+    NSMutableDictionary<NSString *, NSString *> *ret = [NSMutableDictionary<NSString *, NSString *> new];
+    
+    if (!bidRequest) {
+        PBMLogError(@"Invalide properties");
+        
+        return ret;
+    }
+    
+    NSError *error = nil;
+    NSString *json = [bidRequest toJsonStringWithError:&error];
+    
+    //Not sure that this part is needed in our implementation
+    if (json) {
+        ret[PBMParameterKeysOPEN_RTB] = json;
+    } else {
+        PBMLogError(@"%@", [error localizedDescription]);
+    }
+    
+    return ret;
+}
+
 @end

@@ -70,30 +70,29 @@
                                                                            targeting:(nonnull Targeting *)targeting
                                                               extraParameterBuilders:(nullable NSArray<id<PBMParameterBuilder> > *)extraParameterBuilders{
   
-    PBMORTBBidRequest *bidRequest = [PBMParameterBuilderService createORTBBidRequestWithTargeting:targeting];
+    PBMORTBMsqRequest *bidRequest = [PBMParameterBuilderService createORTBMsqRequestWithTargeting:targeting];
+    
     NSMutableArray<id<PBMParameterBuilder> > * const parameterBuilders = [[NSMutableArray alloc] init];
     [parameterBuilders addObjectsFromArray:@[
         [[PBMBasicParameterBuilder alloc] initWithAdConfiguration:adConfiguration
                                                  sdkConfiguration:sdkConfiguration
                                                        sdkVersion:sdkVersion
                                                         targeting:targeting],
-        [[PBMGeoLocationParameterBuilder alloc] initWithLocationManager:pbmLocationManager],
-        [[PBMAppInfoParameterBuilder alloc] initWithBundle:bundle targeting:targeting],
-        [[PBMDeviceInfoParameterBuilder alloc] initWithDeviceAccessManager:pbmDeviceAccessManager],
-        [[PBMNetworkParameterBuilder alloc] initWithCtTelephonyNetworkInfo:ctTelephonyNetworkInfo reachability:reachability],
-        [[PBMUserConsentParameterBuilder alloc] init],
-        [[PBMSKAdNetworksParameterBuilder alloc] initWithBundle:bundle targeting:targeting adConfiguration:adConfiguration],
+        [[PBMUserConsentParameterBuilder alloc] init]
     ]];
     
+    //TODO: - Causes crash for MSQ custom config, commented until a fix is found
+    /*
     if (extraParameterBuilders) {
         [parameterBuilders addObjectsFromArray:extraParameterBuilders];
     }
-   
+    */
+    
     for (id<PBMParameterBuilder> builder in parameterBuilders) {
-        [builder buildBidRequest:bidRequest];
+        [builder buildMsqRequest:bidRequest];
     }
     
-    return [PBMORTBParameterBuilder buildOpenRTBFor:bidRequest];
+    return [PBMORTBParameterBuilder buildOpenRTBForMsq:bidRequest];
 }
 
 + (nonnull PBMORTBBidRequest *)createORTBBidRequestWithTargeting:(nonnull Targeting *)targeting {
@@ -144,6 +143,15 @@
         bidRequest.user.geo.lat = @(coord2d.latitude);
         bidRequest.user.geo.lon = @(coord2d.longitude);
     }
+    return bidRequest;
+}
+
++ (nonnull PBMORTBMsqRequest *)createORTBMsqRequestWithTargeting:(nonnull Targeting *)targeting {
+    PBMORTBMsqRequest *bidRequest = [PBMORTBMsqRequest new];
+    
+    bidRequest.referer = @"https%3A%2F%2Fdebug.mediasquare.fr%2Fdebug%2Fprebid%2Fmsq_desktop.html%3Fpbjs_debug%3Dtrue";
+    bidRequest.pbjs = @"7.17.0";
+    
     return bidRequest;
 }
 
