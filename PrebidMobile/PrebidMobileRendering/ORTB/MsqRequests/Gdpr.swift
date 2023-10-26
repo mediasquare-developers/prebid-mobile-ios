@@ -32,7 +32,7 @@ public class Gdpr: PBMORTBAbstract {
         }
         
         json["consent_string"] = consentString
-        json["consent_required"] = consentRequired
+        json["consent_required"] = consentRequired ? 1 : 0
         
         return json
     }
