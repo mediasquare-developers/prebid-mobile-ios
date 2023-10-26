@@ -773,6 +773,7 @@
 		937AE79A2AE136A4000CFF3D /* MediaType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937AE7992AE136A4000CFF3D /* MediaType.swift */; };
 		937AE79D2AE136BB000CFF3D /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937AE79C2AE136BB000CFF3D /* Banner.swift */; };
 		9397EBDC2AE2D23000BAAF9E /* PBMORTBFormat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9397EBDB2AE2D23000BAAF9E /* PBMORTBFormat+Extensions.swift */; };
+		9397EBE72AEA7A9600BAAF9E /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9397EBE62AEA7A9600BAAF9E /* Video.swift */; };
 		9720387C2358771600F8025A /* NativeRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9720387B2358771600F8025A /* NativeRequestTests.swift */; };
 		9743CB84235F1CDB002E2CAA /* NativeAssetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9743CB83235F1CDB002E2CAA /* NativeAssetTests.swift */; };
 		9743CB86235F264B002E2CAA /* NativeEventTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9743CB85235F264B002E2CAA /* NativeEventTrackerTests.swift */; };
@@ -1658,6 +1659,7 @@
 		937AE7992AE136A4000CFF3D /* MediaType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaType.swift; sourceTree = "<group>"; };
 		937AE79C2AE136BB000CFF3D /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		9397EBDB2AE2D23000BAAF9E /* PBMORTBFormat+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PBMORTBFormat+Extensions.swift"; sourceTree = "<group>"; };
+		9397EBE62AEA7A9600BAAF9E /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		9720387B2358771600F8025A /* NativeRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeRequestTests.swift; sourceTree = "<group>"; };
 		9743CB83235F1CDB002E2CAA /* NativeAssetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeAssetTests.swift; sourceTree = "<group>"; };
 		9743CB85235F264B002E2CAA /* NativeEventTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeEventTrackerTests.swift; sourceTree = "<group>"; };
@@ -3143,6 +3145,7 @@
 			isa = PBXGroup;
 			children = (
 				937AE79C2AE136BB000CFF3D /* Banner.swift */,
+				9397EBE62AEA7A9600BAAF9E /* Video.swift */,
 			);
 			path = Codes;
 			sourceTree = "<group>";
@@ -4209,6 +4212,7 @@
 				5BC37AE8271F2D0F00444D5E /* NativeImageAssetType.swift in Sources */,
 				92C85D6227A977AD0080BAC5 /* NativeAdMarkupAsset.swift in Sources */,
 				5BC378F4271F1CFF00444D5E /* PBMORTBBanner.m in Sources */,
+				9397EBE72AEA7A9600BAAF9E /* Video.swift in Sources */,
 				FAEE4D0E262DC2B200AD9966 /* TrackerManager.swift in Sources */,
 				FAEE4D1B262DC2B200AD9966 /* InterstitialAdUnit.swift in Sources */,
 				5BC37A1F271F1D0000444D5E /* PBMBidRequester.m in Sources */,

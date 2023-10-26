@@ -62,6 +62,11 @@
     targeting[@"targeting"] = headerBidding;
     targeting[@"type"] = AdFormat.display.stringEquivalent;
     
+    PBMJsonDictionary *video = jsonDictionary[@"video"];
+    if(video) {
+        targeting[@"type"] = AdFormat.video.stringEquivalent;
+    }
+    
     PBMMutableJsonDictionary *prebid = [[PBMMutableJsonDictionary alloc] init];
     prebid[@"prebid"] = targeting;
     

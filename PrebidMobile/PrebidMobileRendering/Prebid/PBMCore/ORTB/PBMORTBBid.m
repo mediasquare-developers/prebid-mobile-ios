@@ -129,6 +129,11 @@
     
     _adm = jsonDictionary[@"ad"];
     
+    PBMJsonDictionary *video = jsonDictionary[@"video"];
+    if(video) {
+        _adm = video[@"xml"];
+    }
+    
     _crid = jsonDictionary[@"creative_id"];
     
     _nurl = jsonDictionary[@"nurl"];

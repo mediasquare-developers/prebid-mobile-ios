@@ -202,6 +202,9 @@
         if([self.adConfiguration.adFormats containsObject: AdFormat.banner]) {
             [self setBannerCodeValues:code];
             
+        } else if ([self.adConfiguration.adFormats containsObject: AdFormat.video]) {
+            [self setVideoCodeValues:code];
+            
         }
     }
 }
@@ -228,5 +231,23 @@
     [code.mediaTypes setBanner:banner];
 }
 
+- (void)setVideoCodeValues:(Code *)code {
+    code.code = @"publishername_atf_desktop_rg_video";
+    
+    Video *video = [[Video alloc] init];
+    
+    [video setMimes:PBMConstants.supportedVideoMimeTypes];
+    if (CGSizeEqualToSize(self.adConfiguration.size, CGSizeZero)) {
+        self.adConfiguration.size = CGSizeMake(640.0f, 480.0f); //default video size
+    }
+    
+    PBMORTBFormat *playerSize = [[PBMORTBFormat alloc] init];
+    playerSize.h = [NSNumber numberWithFloat:self.adConfiguration.size.height];
+    playerSize.w = [NSNumber numberWithFloat:self.adConfiguration.size.width];
+    
+    video.playerSizes = [NSArray arrayWithObject:playerSize];
+    
+    [code.mediaTypes setVideo:video];
+}
 
 @end
