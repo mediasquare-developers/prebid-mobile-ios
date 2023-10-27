@@ -134,6 +134,17 @@
         _adm = video[@"xml"];
     }
     
+    NSString *nativeResponse = jsonDictionary[@"native"];
+    if(nativeResponse) {
+        NSError *error;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:nativeResponse options:NSJSONWritingPrettyPrinted error:&error];
+
+        if (jsonData) {
+            NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            _adm = jsonString;
+        }
+    }
+    
     _crid = jsonDictionary[@"creative_id"];
     
     _nurl = jsonDictionary[@"nurl"];

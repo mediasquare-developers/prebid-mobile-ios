@@ -15,6 +15,7 @@ public class MediaType: PBMORTBAbstract {
     
     public var banner: Banner?
     public var video: Video?
+    public var native: Native?
     
     //MARK: - Methods
     
@@ -27,6 +28,10 @@ public class MediaType: PBMORTBAbstract {
         
         if(video != nil) {
             json["video"] = video!.toJsonDictionary()
+        }
+        
+        if(native != nil) {
+            json["native"] = native!.toJsonDictionary()
         }
         
         return json

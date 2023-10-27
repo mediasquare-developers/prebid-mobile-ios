@@ -43,6 +43,15 @@ public class NativeTitle: NSObject, JsonDecodable {
         }
     }
     
+    public required init(text: String) {
+        guard !text.isEmpty else {
+            Log.warn("The native title is empty")
+            return
+        }
+        
+        self.text = text
+    }
+    
     public override init() {
         super.init()
     }

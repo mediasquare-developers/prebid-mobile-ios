@@ -77,7 +77,12 @@ public class NativeAdMarkup: NSObject, JsonDecodable {
             return nil
         }
         
-        self.init(jsonDictionary: jsonDic)
+        if((jsonDic["body"] as? String) != nil) {
+            Log.info("Body is present, so it's an MSQ Request")
+            self.init(msqJsonDictionary: jsonDic)
+        } else {
+            self.init(jsonDictionary: jsonDic)
+        }
     }
     
     public required init(jsonDictionary: [String: Any]) {
@@ -113,6 +118,29 @@ public class NativeAdMarkup: NSObject, JsonDecodable {
                 finalEventTrackers.append(NativeEventTrackerResponse(jsonDictionary: eventTrackerDictionary))
             }
             self.eventtrackers = finalEventTrackers
+        }
+        
+        if link == nil {
+            Log.warn("There is no link property in native ad markup response")
+        }
+    }
+    
+    public required init(msqJsonDictionary: [String: Any]) {
+        guard !msqJsonDictionary.isEmpty else {
+            Log.warn("The native ad markup json dicitonary is empty")
+            return
+        }
+        
+        self.imptrackers = msqJsonDictionary["impressionTrackers"] as? [String]
+        
+        var finalAssetArray = [NativeAdMarkupAsset]()
+        finalAssetArray.append(NativeAdMarkupAsset(msqJsonDictionary: msqJsonDictionary))
+        
+        self.assets = finalAssetArray
+        
+        
+        if let link = msqJsonDictionary["clickUrl"] as? String {
+            self.link = NativeLink(link: link)
         }
         
         if link == nil {

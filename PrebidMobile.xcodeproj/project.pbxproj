@@ -774,6 +774,9 @@
 		937AE79D2AE136BB000CFF3D /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937AE79C2AE136BB000CFF3D /* Banner.swift */; };
 		9397EBDC2AE2D23000BAAF9E /* PBMORTBFormat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9397EBDB2AE2D23000BAAF9E /* PBMORTBFormat+Extensions.swift */; };
 		9397EBE72AEA7A9600BAAF9E /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9397EBE62AEA7A9600BAAF9E /* Video.swift */; };
+		9397EBEA2AEAA92300BAAF9E /* Native.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9397EBE92AEAA92300BAAF9E /* Native.swift */; };
+		9397EBED2AEAA95800BAAF9E /* AssetRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9397EBEC2AEAA95800BAAF9E /* AssetRatio.swift */; };
+		9397EBEF2AEAA96600BAAF9E /* MsqNativeAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9397EBEE2AEAA96600BAAF9E /* MsqNativeAsset.swift */; };
 		9720387C2358771600F8025A /* NativeRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9720387B2358771600F8025A /* NativeRequestTests.swift */; };
 		9743CB84235F1CDB002E2CAA /* NativeAssetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9743CB83235F1CDB002E2CAA /* NativeAssetTests.swift */; };
 		9743CB86235F264B002E2CAA /* NativeEventTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9743CB85235F264B002E2CAA /* NativeEventTrackerTests.swift */; };
@@ -1660,6 +1663,9 @@
 		937AE79C2AE136BB000CFF3D /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		9397EBDB2AE2D23000BAAF9E /* PBMORTBFormat+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PBMORTBFormat+Extensions.swift"; sourceTree = "<group>"; };
 		9397EBE62AEA7A9600BAAF9E /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
+		9397EBE92AEAA92300BAAF9E /* Native.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Native.swift; sourceTree = "<group>"; };
+		9397EBEC2AEAA95800BAAF9E /* AssetRatio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetRatio.swift; sourceTree = "<group>"; };
+		9397EBEE2AEAA96600BAAF9E /* MsqNativeAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MsqNativeAsset.swift; sourceTree = "<group>"; };
 		9720387B2358771600F8025A /* NativeRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeRequestTests.swift; sourceTree = "<group>"; };
 		9743CB83235F1CDB002E2CAA /* NativeAssetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeAssetTests.swift; sourceTree = "<group>"; };
 		9743CB85235F264B002E2CAA /* NativeEventTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeEventTrackerTests.swift; sourceTree = "<group>"; };
@@ -3132,11 +3138,13 @@
 		937AE7912AE13663000CFF3D /* MsqRequests */ = {
 			isa = PBXGroup;
 			children = (
+				9397EBEB2AEAA94400BAAF9E /* Utils */,
 				937AE79B2AE136A8000CFF3D /* Codes */,
 				937AE7922AE13680000CFF3D /* Code.swift */,
 				937AE7942AE1368A000CFF3D /* Floor.swift */,
 				937AE7972AE13699000CFF3D /* Gdpr.swift */,
 				937AE7992AE136A4000CFF3D /* MediaType.swift */,
+				9397EBE92AEAA92300BAAF9E /* Native.swift */,
 			);
 			path = MsqRequests;
 			sourceTree = "<group>";
@@ -3148,6 +3156,15 @@
 				9397EBE62AEA7A9600BAAF9E /* Video.swift */,
 			);
 			path = Codes;
+			sourceTree = "<group>";
+		};
+		9397EBEB2AEAA94400BAAF9E /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				9397EBEC2AEAA95800BAAF9E /* AssetRatio.swift */,
+				9397EBEE2AEAA96600BAAF9E /* MsqNativeAsset.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		9720387A235876F000F8025A /* NativeUnitTests */ = {
@@ -4165,6 +4182,7 @@
 				5BC379FA271F1D0000444D5E /* PBMExternalURLOpeners.m in Sources */,
 				537B6581283524BB008AE9D1 /* PrebidInitializationStatus.swift in Sources */,
 				5BC3794E271F1D0000444D5E /* AdPosition.swift in Sources */,
+				9397EBEA2AEAA92300BAAF9E /* Native.swift in Sources */,
 				928E5A6E27F0F706000ADA1A /* ContextType.swift in Sources */,
 				5BC37AA7271F1D0000444D5E /* MediationBannerAdUnit.swift in Sources */,
 				53F35F6F292BAE9B001C1183 /* UserDefaults+Extensions.swift in Sources */,
@@ -4178,6 +4196,7 @@
 				53A368E42AB2E0AA00A03B3E /* PrebidAdUnit.swift in Sources */,
 				5BC37A58271F1D0000444D5E /* PBMORTBNoBidReason.m in Sources */,
 				53A368E72AB2E31700A03B3E /* PrebidRequest.swift in Sources */,
+				9397EBED2AEAA95800BAAF9E /* AssetRatio.swift in Sources */,
 				5BC37A85271F1D0000444D5E /* BannerEventLoadingDelegate.swift in Sources */,
 				5BC37A8D271F1D0000444D5E /* InterstitialRenderingAdUnit.swift in Sources */,
 				5BC379C0271F1D0000444D5E /* PBMInterstitialDisplayProperties.m in Sources */,
@@ -4222,6 +4241,7 @@
 				5BC379A7271F1D0000444D5E /* PBMDeferredModalState.m in Sources */,
 				5BC379D7271F1D0000444D5E /* PBMDisplayView.m in Sources */,
 				5BC37AA3271F1D0000444D5E /* AdLoadFlowControllerDelegate.swift in Sources */,
+				9397EBEF2AEAA96600BAAF9E /* MsqNativeAsset.swift in Sources */,
 				5BC378C2271F1CFF00444D5E /* UIView+PBMExtensions.m in Sources */,
 				5BC3799E271F1D0000444D5E /* PBMModalPresentationController.m in Sources */,
 				5BC37A6D271F1D0000444D5E /* PBMORTBBid.m in Sources */,

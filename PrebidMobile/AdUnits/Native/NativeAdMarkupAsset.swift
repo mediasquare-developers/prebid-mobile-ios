@@ -67,6 +67,29 @@ public class NativeAdMarkupAsset: NSObject, JsonDecodable {
         }
     }
     
+    public required init(msqJsonDictionary: [String: Any]) {
+        guard !msqJsonDictionary.isEmpty else {
+            Log.warn("The native title json dicitonary is empty")
+            return
+        }
+        
+        if let title = msqJsonDictionary["title"] as? String {
+            self.title = NativeTitle(text: title)
+        }
+        
+        if let imgDictionary = msqJsonDictionary["img"] as? [String: Any] {
+            self.img = NativeImage(jsonDictionary: imgDictionary)
+        }
+        
+        if let body = msqJsonDictionary["body"] as? String {
+            self.data = NativeData(body: body)
+        }
+    
+        if let link = msqJsonDictionary["clickUrl"] as? String {
+            self.link = NativeLink(link: link)
+        }
+    }
+    
     public override init() {
         super.init()
     }

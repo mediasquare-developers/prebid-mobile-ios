@@ -67,6 +67,11 @@
         targeting[@"type"] = AdFormat.video.stringEquivalent;
     }
     
+    NSString *nativeResponse = jsonDictionary[@"native"];
+    if(nativeResponse) {
+        targeting[@"type"] = AdFormat.native.stringEquivalent;
+    }
+    
     PBMMutableJsonDictionary *prebid = [[PBMMutableJsonDictionary alloc] init];
     prebid[@"prebid"] = targeting;
     

@@ -50,6 +50,17 @@ public class NativeData: NSObject, JsonDecodable {
         }
     }
     
+    public required init(body: String) {
+        guard !body.isEmpty else {
+            Log.warn("The native data String is empty")
+            return
+        }
+        
+        self.type = NativeDataAssetType.desc.rawValue
+        self.length = body.count
+        self.value = body
+    }
+    
     public override init() {
         super.init()
     }

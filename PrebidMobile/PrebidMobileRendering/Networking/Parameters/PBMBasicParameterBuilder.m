@@ -205,6 +205,9 @@
         } else if ([self.adConfiguration.adFormats containsObject: AdFormat.video]) {
             [self setVideoCodeValues:code];
             
+        } else if ([self.adConfiguration.adFormats containsObject: AdFormat.native]) {
+            [self setNativeCodeValues:code];
+            
         }
     }
 }
@@ -248,6 +251,12 @@
     video.playerSizes = [NSArray arrayWithObject:playerSize];
     
     [code.mediaTypes setVideo:video];
+}
+
+- (void)setNativeCodeValues:(Code *)code {
+    Native *nativeAd = [[Native alloc] init];
+    
+    [code.mediaTypes setNative:nativeAd];
 }
 
 @end

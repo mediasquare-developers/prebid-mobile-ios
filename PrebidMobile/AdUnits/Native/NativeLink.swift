@@ -46,6 +46,19 @@ public class NativeLink: NSObject, JsonDecodable {
             Log.warn("There is no url property in native link response")
         }
     }
+    
+    public required init(link: String) {
+        guard !link.isEmpty else {
+            Log.warn("The native link is empty")
+            return
+        }
+        
+        self.url = link
+        
+        if url == nil {
+            Log.warn("There is no url property in native link response")
+        }
+    }
 
     public override init() {
         super.init()
