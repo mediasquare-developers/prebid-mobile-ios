@@ -119,10 +119,10 @@
         BidResponse * const _Nullable bidResponse = [PBMBidResponseTransformer transformResponse:serverResponse error:&trasformationError];
         
         if (bidResponse && !trasformationError) {
+            NSDate * const responseDate = [NSDate date];
+            
             NSNumber * const tmaxrequest = bidResponse.tmaxrequest;
             if (tmaxrequest) {
-                NSDate * const responseDate = [NSDate date];
-
                 const NSTimeInterval bidResponseTimeout = tmaxrequest.doubleValue / 1000.0;
                 const NSTimeInterval remoteTimeout = ([responseDate timeIntervalSinceDate:requestDate]
                                                       + bidResponseTimeout
@@ -149,6 +149,12 @@
                 if(pbsSDKConfig.cftPreRender) {
                     Prebid.shared.creativeFactoryTimeoutPreRenderContent = pbsSDKConfig.cftPreRender.doubleValue;
                 }
+            }
+            
+            //TODO: call pixel TAG
+            if (bidResponse.winningBid != nil) {
+                id responseJson = [NSJSONSerialization JSONObjectWithData:serverResponse.rawData options:0 error:nil];
+                [self callPixelTagWithResponse:responseJson andResponseTime:[responseDate timeIntervalSinceDate:requestDate]];
             }
         }
         
@@ -201,6 +207,79 @@
 
 - (BOOL)isInvalidID:(NSString *)idString {
     return (!idString || [idString isEqualToString:@""] || [[idString stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet] length] == 0);
+}
+
+// Function to perform the POST request
+- (void)callPixelTagWithResponse:(id )responseJson andResponseTime:(NSTimeInterval)responseTime {
+    
+    // API endpoint URL
+    NSURL *url = [NSURL URLWithString:@"https://pbs-front.mediasquare.fr/winning"];
+
+    // Create a mutable URL request
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"POST"];
+
+    // Set the request headers
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    
+    responseJson = [[responseJson objectForKey:@"responses"] objectAtIndex:0];
+    id requestJson = [NSJSONSerialization JSONObjectWithData:[[self getRTBRequest] dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+    NSDictionary *code =  [[requestJson objectForKey:@"codes"] objectAtIndex:0];
+    
+    bool gdprConsent = (long)[[requestJson objectForKey:@"gdpr"] objectForKey:@"consent_required"] == 1 && ![[[requestJson objectForKey:@"gdpr"] objectForKey:@"consent_string"] isEmpty];
+    
+    // Create JSON data from a dictionary
+    NSDictionary *jsonDictionary = @{
+        @"pbjs": [requestJson objectForKey:@"pbjs"],
+        @"referer": [requestJson objectForKey:@"referer"],
+        @"bidder": [responseJson objectForKey:@"bidder"],
+        @"code": [code objectForKey:@"code"],
+        @"hasConsent": [NSNumber numberWithBool:gdprConsent],
+        @"increment": [responseJson objectForKey:@"increment"],
+        @"ova": [responseJson objectForKey:@"ova"],
+        @"cpm": [responseJson objectForKey:@"cpm"],
+        @"size": [NSString stringWithFormat:@"%dx%d", (int)[responseJson objectForKey:@"width"], (int)[responseJson objectForKey:@"height"]],
+        @"mediaType": [[[code objectForKey:@"mediaTypes"] allKeys] objectAtIndex:0],
+        @"currency": [responseJson objectForKey:@"currency"],
+        @"creativeId": [responseJson objectForKey:@"creative_id"],
+        @"adUnitCode": @"", //[requestJson objectForKey:@"adUnit"],
+        @"timeToRespond": [NSString stringWithFormat:@"%.f",round(responseTime * 1000)],
+        @"requestId": [responseJson objectForKey:@"bid_id"],
+        @"auctionId": [code objectForKey:@"auctionId"],
+        @"originalCpm": [responseJson objectForKey:@"cpm"],
+        @"originalCurrency": [responseJson objectForKey:@"currency"]
+    };
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:0 error:&error];
+
+    if (!jsonData) {
+        NSLog(@"Error creating JSON data: %@", error.localizedDescription);
+        return;
+    }
+
+    // Set the request body with JSON data
+    [request setHTTPBody:jsonData];
+
+    // Create a session configuration
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+
+    // Create a session using the configuration
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
+
+    // Create a data task with the request
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (error) {
+            NSLog(@"Error: %@", error.localizedDescription);
+        } else {
+            // Handle the response data
+            NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"Response: %@", result);
+        }
+    }];
+
+    // Resume the task to initiate the request
+    [dataTask resume];
+    
 }
 
 @end

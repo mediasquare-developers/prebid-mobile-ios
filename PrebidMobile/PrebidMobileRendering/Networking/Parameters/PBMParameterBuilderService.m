@@ -149,8 +149,9 @@
 + (nonnull PBMORTBMsqRequest *)createORTBMsqRequestWithTargeting:(nonnull Targeting *)targeting {
     PBMORTBMsqRequest *bidRequest = [PBMORTBMsqRequest new];
     
-    bidRequest.referer = @"https%3A%2F%2Fdebug.mediasquare.fr%2Fdebug%2Fprebid%2Fmsq_desktop.html%3Fpbjs_debug%3Dtrue";
-    bidRequest.pbjs = @"7.17.0";
+    NSString *referer = [NSString stringWithFormat:@"%@ | %@",[[[NSBundle mainBundle] infoDictionary] objectForKey:(id)kCFBundleNameKey],[[NSBundle mainBundle] bundleIdentifier]];
+    bidRequest.referer = referer;
+    bidRequest.pbjs = [NSString stringWithFormat:@"PBM_SDK_%@", Prebid.shared.version];
     
     return bidRequest;
 }

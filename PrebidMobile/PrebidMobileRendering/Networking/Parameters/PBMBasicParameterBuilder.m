@@ -224,9 +224,13 @@
     
     if(!self.adConfiguration.isInterstitialAd) {
         [banner addSize:self.adConfiguration.size];
+        code.adUnit = [NSString stringWithFormat:@"imp-prebid-banner-%d-%d", (int)banner.sizes[0].w, (int)banner.sizes[0].h];
     } else {
         [banner addSize:CGSizeMake(320, 480)];
+        code.adUnit = [NSString stringWithFormat:@"imp-prebid-interstitial-%d-%d", (int)banner.sizes[0].w, (int)banner.sizes[0].h];
     }
+    
+    
     
     //TODO: Check if there is an equivalent to Android AdPosition value
     banner.position = 1;
@@ -244,6 +248,8 @@
         self.adConfiguration.size = CGSizeMake(640.0f, 480.0f); //default video size
     }
     
+    code.adUnit = @"imp-prebid-video-interstitial-320-480";
+    
     PBMORTBFormat *playerSize = [[PBMORTBFormat alloc] init];
     playerSize.h = [NSNumber numberWithFloat:self.adConfiguration.size.height];
     playerSize.w = [NSNumber numberWithFloat:self.adConfiguration.size.width];
@@ -255,6 +261,8 @@
 
 - (void)setNativeCodeValues:(Code *)code {
     Native *nativeAd = [[Native alloc] init];
+    
+    code.adUnit = @"imp-prebid-native";
     
     [code.mediaTypes setNative:nativeAd];
 }
