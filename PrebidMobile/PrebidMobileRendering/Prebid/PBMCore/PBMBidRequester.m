@@ -242,7 +242,7 @@
         @"mediaType": [[[code objectForKey:@"mediaTypes"] allKeys] objectAtIndex:0],
         @"currency": [responseJson objectForKey:@"currency"],
         @"creativeId": [responseJson objectForKey:@"creative_id"],
-        @"adUnitCode": @"", //[requestJson objectForKey:@"adUnit"],
+        @"adUnitCode": [requestJson objectForKey:@"adUnit"],
         @"timeToRespond": [NSString stringWithFormat:@"%.f",round(responseTime * 1000)],
         @"requestId": [responseJson objectForKey:@"bid_id"],
         @"auctionId": [code objectForKey:@"auctionId"],
